@@ -8,11 +8,24 @@ let map;
 var markers = [];
 var iconImage = "https://maps.google.com/mapfiles/marker_black.png"
 
-
-function initialize() {
-  google.maps.visualRefresh = true;
+function deleteMarkers() {
+  
+  markers = [];
 }
+
+function setMapOnAll(map) {
+  for (let i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
+// Removes the markers from the map, but keeps them in the array.
+function hideMarkers() {
+  setMapOnAll(null);
+}
+
 function initMap() {
+ 
   const myLatlng = { lat: 53.4795, lng: -2.2451 };
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 10,
@@ -31,6 +44,7 @@ function initMap() {
   
   
   searchBox.addListener("places_changed", () => {
+    hideMarkers()
     const places = searchBox.getPlaces();
 
 
@@ -69,6 +83,8 @@ function initMap() {
             title: place.name,
             position: place.geometry.location,
             icon: iconImage,
+            animation: google.maps.Animation.BOUNCE
+
             
           })
           );
@@ -91,24 +107,33 @@ function initMap() {
       
       
       map.addListener("click", (mapsMouseEvent) => {
+        hideMarkers()
         clickPos= mapsMouseEvent.latLng.toJSON()
         clickLat=clickPos.lat;
         clickLng=clickPos.lng;
 
-
+        markers.push(
         new google.maps.Marker({
-          position: {lat: clickLat, lng: clickLng},
-          map: map,
-          icon: iconImage,
-          title: "city",
-          animation: google.maps.Animation.BOUNCE
+            position: {lat: clickLat, lng: clickLng},
+            map: map,
+            icon: iconImage,
+            title: "city",
+            animation: google.maps.Animation.BOUNCE
+            
 
 
-        });
+        })
+        );
 
+      
+
+        
+
+
+        
       console.log(clickLat)
       console.log(clickLng)
-        
+      
 
       });
 

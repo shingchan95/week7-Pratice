@@ -72,7 +72,7 @@ function initMap() {
             
           })
           );
-          console.log(markers)
+        
          if (place.geometry.viewport) {
             // Only geocodes have viewport.
             bounds.union(place.geometry.viewport);
@@ -82,9 +82,11 @@ function initMap() {
           
         });
       var latLng = new google.maps.LatLng(inputLat, inputLng); //Makes a latlng
-      map.panTo(latLng); //Make map global
-      //  map.fitBounds(bounds);
-      });
+      map.panTo(latLng);
+      console.log(inputLat)
+      console.log(inputLng)
+    
+    });
    
       
       
@@ -103,6 +105,9 @@ function initMap() {
 
 
         });
+
+      console.log(clickLat)
+      console.log(clickLng)
         
 
       });
